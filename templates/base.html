@@ -1,0 +1,40 @@
+{% load bootstrap5 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% bootstrap_css %}
+    <title>빛나는 소나무</title>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+</head>
+<body>
+    <div class="container">
+        {% comment %} 로그인된 상태일 때 {% endcomment %}
+        {% if request.user.is_authenticated %}
+            <h3>안녕, {{ user }}</h3>
+            <form action="{% url "accounts:logout" %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="로그아웃">
+            </form>
+        {% comment %} 로그인이 안된 상태일 때 {% endcomment %}
+        {% else %}
+            <a href="{% url "accounts:login" %}">로그인</a>
+            <a href="{% url "accounts:signup" %}">회원가입</a>
+        {% endif %}
+    </div>
+    {% block content %}
+    {% endblock content %}
+    <div class="container">
+        <form action="{% url "accounts:delete" %}" method="POST">
+            {% csrf_token %}
+            {% if request.user.is_authenticated %}
+            <input type="submit" value="계정 삭제ㅠㅠ">
+            {% endif %}
+            </form>
+    </div>
+    {% bootstrap_javascript %}
+</body>
+</html>
