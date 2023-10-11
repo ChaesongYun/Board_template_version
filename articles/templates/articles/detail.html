@@ -1,18 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3> {{ article.pk }}번째 글 </h3>
-<hr>
-<p>제목 : {{ article.title }}</p>
-<p>내용 : {{ article.content }}</p>
-<p>언제썼냐면 : {{ article.created_at }}</p>
-<p>수정은언제 : {{ article.updated_at }}</p>
-<hr>
-<a href="{% url 'articles:update' article.pk %}">수정하기</a>
-<form action="{% url 'articles:delete' article.pk %}" method="POST">
-  {% csrf_token %}
-  <button>삭제하기</button>
-</form>
-<a href="{% url 'articles:index' %}">뒤로가기</a>
+
+<div class="container">
+  
+  <div class="row">
+    <h3> {{ article.pk }}번째 글 </h3>
+    <hr>
+    <p>제목 : {{ article.title }}</p>
+    <p>내용 : {{ article.content }}</p>
+    <p>언제썼냐면 : {{ article.created_at }}</p>
+    <p>수정은언제 : {{ article.updated_at }}</p>
+    <hr>
+  </div>
+  
+  <div class="row">
+    {% comment %} 수정, 삭제, 뒤로가기 {% endcomment %}
+    <a href="{% url 'articles:update' article.pk %}">수정하기</a>
+    <form action="{% url 'articles:delete' article.pk %}" method="POST">
+      {% csrf_token %}
+      <button>삭제하기</button>
+    </form>
+    <a href="{% url 'articles:index' %}">뒤로가기</a>
+    <hr>
+  </div>
+
+  <div class="row">
+    <h3>댓글 목록</h3>
+    {% for comment in comments %}
+      <div>{{ comment.content }}</div>
+      <form action="{% url "articles:delete_comment" article.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="댓글삭제">
+      </form>
+    {% endfor %}
+
+    <form action="{% url "articles:create_comment" article.pk %}" method="POST">
+      {% csrf_token %}
+      {{ comment_form }}
+      <input type="submit" value="댓글작성">
+    </form>
+    <hr>
+  </div>
+
+</div>
+
 {% endblock content %}
 

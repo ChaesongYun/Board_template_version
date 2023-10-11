@@ -9,4 +9,12 @@ urlpatterns = [
     path('<int:pk>/', views.detail, name='detail'),
     path('<int:pk>/delete/', views.delete, name='delete'),
     path('<int:pk>/update/', views.update, name='update'),
+    
+    # 댓글
+    path('<int:pk>/comments/', views.create_comment, name='create_comment'),
+    path(
+        '<int:article_pk>/comments/<int:comment_pk>/',
+        views.delete_comment,
+        name='delete_comment',
+    )
 ]
