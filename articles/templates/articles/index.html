@@ -4,8 +4,6 @@
 <h1>게시글</h1>
 {% if request.user.is_authenticated %}
     <a href="{% url "articles:create" %}">글 쓰기</a>
-{% else %}
-    <a href="{% url "accounts:login" %}">글 쓰려면 로그인해야해</a>
 {% endif %}
 <hr>
 {% for article in articles %}
