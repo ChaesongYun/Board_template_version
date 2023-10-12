@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.views.decorators.http import require_POST, require_http_methods
+from django.contrib.auth.decorators import login_required
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 def login(request):
@@ -23,6 +25,7 @@ def login(request):
     return render(request, 'accounts/login.html', context)
 
 
+@login_required
 def logout(request):
     if request.user.is_authenticated:
         auth_logout(request)
@@ -43,7 +46,42 @@ def signup(request):
     return render(request, 'accounts/signup.html', context)
 
 
+@login_required
 def delete(request):
     user = request.user
     user.delete()
     return redirect('articles:index')
+
+
+@login_required
+def update(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/update.html', context)
+
+
+@login_required
+def change_password(request, user_pk):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            # 비밀번호 바뀌어도 로그인 상태 유지
+            update_session_auth_hash(request, user) 
+            return redirect('articles:index')
+        
+    # GET요청으로 들어오면 form을 보여준다
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/change_password.html', context)

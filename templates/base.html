@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{% static "css/style.css" %}">
 </head>
 <body>
-    <div class="container">
+    <div class="container p-3">
         {% comment %} 로그인된 상태일 때 {% endcomment %}
         {% if request.user.is_authenticated %}
             <h3>안녕, {{ user }}</h3>

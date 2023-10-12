@@ -32,10 +32,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'articles', # 게시글 
+    # 앞에꺼는 import 가능 
+    # 외래키를 가져오려면 가져오려는 외래키가 있는 앱을 지금 앱보다 먼저 위치시켜야 함
     'accounts', # 회원관리
+    'articles', # 게시글 
+
+    # third party apps
     'bootstrap5',
     'django_extensions',
+
+    # django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -128,3 +134,5 @@ STATICFILES_DIRS = os.path.join('static'),
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'accounts.User'

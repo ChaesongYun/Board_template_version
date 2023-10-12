@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container p-3">
   
   <div class="row">
     <h3> {{ article.pk }}번째 글 </h3>
@@ -11,28 +11,35 @@
     <p>내용 : {{ article.content }}</p>
     <p>언제썼냐면 : {{ article.created_at }}</p>
     <p>수정은언제 : {{ article.updated_at }}</p>
-    <hr>
   </div>
-  
+
+  {% comment %} 수정, 삭제, 뒤로가기 {% endcomment %}
   <div class="row">
-    {% comment %} 수정, 삭제, 뒤로가기 {% endcomment %}
+    {% comment %} 글 작성자가 로그인한 사용자라면 삭제 버튼 표시 {% endcomment %}
+    {% if article.user == request.user %}
     <a href="{% url 'articles:update' article.pk %}">수정하기</a>
     <form action="{% url 'articles:delete' article.pk %}" method="POST">
       {% csrf_token %}
       <button>삭제하기</button>
     </form>
+    {% endif %}
     <a href="{% url 'articles:index' %}">뒤로가기</a>
-    <hr>
   </div>
 
+  <hr>
+  
   <div class="row">
     <h3>댓글 목록</h3>
     {% for comment in comments %}
-      <div>{{ comment.content }}</div>
-      <form action="{% url "articles:delete_comment" article.pk comment.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="댓글삭제">
-      </form>
+      <div>{{ comment.user }}: {{ comment.content }}</div>
+
+      {% comment %} 댓글 작성자가 로그인한 사용자라면 삭제 버튼 표시 {% endcomment %}
+      {% if comment.user == request.user %}
+        <form action="{% url "articles:delete_comment" article.pk comment.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="댓글삭제">
+        </form>
+      {% endif %}
     {% endfor %}
 
     <form action="{% url "articles:create_comment" article.pk %}" method="POST">
@@ -40,8 +47,9 @@
       {{ comment_form }}
       <input type="submit" value="댓글작성">
     </form>
-    <hr>
   </div>
+
+  <hr>
 
 </div>
 

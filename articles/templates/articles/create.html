@@ -2,11 +2,13 @@
 
 {% block content %}
     <h3>글 쓰기</h3>
-    <form action="{% url 'articles:create' %}" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit">
-    </form>
+    <div class="container">
+        <form action="{% url 'articles:create' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit">
+        </form>
+    </div>
     <hr>
     <a href="{% url 'articles:index' %}">뒤로 가기</a>
 {% endblock content %}
