@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # third party apps
     'bootstrap5',
     'django_extensions',
+    'fontawesomefree',
 
     # django
     'django.contrib.admin',
