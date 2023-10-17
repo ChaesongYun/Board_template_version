@@ -30,7 +30,7 @@ class ArticleForm(forms.ModelForm):
 
     class Meta:
         model = Article
-        exclude = ('user', 'like_users')
+        exclude = ('user', 'like_users', 'hashtags',)
         
         
 class CommentForm(forms.ModelForm):

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3> {{ articles.count }}개의 게시글 </h3>
+    <hr>
+    <p> {{ hashtag.content }}을(를) 태그한 글 </p>
+    {% for article in articles %}
+        <h4> {{ article.pk }}번 게시글 </h4>
+        <p> 게시글 {{ article.title }} </p>
+        <p> {{ article.comments.all.count }}개 댓글 </p>
+        <a href="{% url "articles:detail" article.pk %}">상세글</a>
+        <hr>
+    {% endfor %}
+{% endblock content %}
+
+

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_extensions',
     'fontawesomefree',
+    'debug_toolbar',
 
     # django
     'django.contrib.admin',
@@ -52,6 +53,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 디버깅 툴바 나타나게 하려면
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -137,3 +140,14 @@ STATICFILES_DIRS = os.path.join('static'),
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+# debug toolbar
+if DEBUG:
+    INTERNAL_IPS = ['127.0.0.1', ] 
+
+    import mimetypes
+    mimetypes.add_type("application/javascript", ".js", True)
+
+    # DEBUG_TOOLBAR_CONFIG = {
+    #     'INTERCEPT_REDIRECTS': False,
+    # }

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_safe
-from .models import Article, Comment
+from .models import Article, Comment, Hashtag
 from .forms import ArticleForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
@@ -20,10 +20,12 @@ def detail(request, pk):
     article = get_object_or_404(Article, pk=pk) # 없으면 404 에러
     comment_form = CommentForm()
     comments = article.comments.all() # article에 해당되는 comments 출력
+    hashtags = article.hashtags.all() # article에 해당되는 hashtags 출력
     context = {
         'article' : article,
         'comment_form' : comment_form,
         'comments' : comments,
+        'hashtags' : hashtags,
     }
     return render(request, 'articles/detail.html', context)
 
@@ -39,6 +41,13 @@ def create(request):
             # 통일성을 위해 
             # article.save()보단 form.save()로!
             form.save()
+
+            for word in article.content.split(' '):
+                if word[0] == '#':
+                    # get_or_crate(): 첫번째 인자는 우리가 꺼내려고 하는 모델 객체
+                    # 두번째 인자는 flag!! 생성되면 true, 아니면 false
+                    hashtag, created = Hashtag.objects.get_or_create(content=word[1:])
+                    article.hashtags.add(hashtag)
             return redirect('articles:detail', article.pk)
     else:
         form = ArticleForm()
@@ -117,8 +126,23 @@ def delete_comment(request, article_pk, comment_pk):
 @login_required
 def likes(request, article_pk):
     article = Article.objects.get(pk=article_pk)
-    if request.user in article.like_users.all():
+    # get은 찾는 객체가 없다면 에러를 반환
+    # +단일 객체를 반환
+    # if request.user in article.like_users.all():
+    # filter는 여러개의 객체가 담긴 QuerySet으로 반환
+    if article.like_users.filter(pk=request.user.pk).exists():
         article.like_users.remove(request.user)
     else:
         article.like_users.add(request.user)
     return redirect('articles:index')
+
+
+# 해시태그
+def hashtag(request, hash_pk):
+    hashtag = Hashtag.objects.get(pk=hash_pk)
+    articles = hashtag.articles.all()
+    context = {
+        'hashtag' : hashtag,
+        'articles' : articles,
+    }
+    return render(request, 'articles/hashtag.html', context)

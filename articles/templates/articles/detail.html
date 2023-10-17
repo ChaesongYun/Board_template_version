@@ -7,10 +7,18 @@
   <div class="row">
     <h3> {{ article.pk }}번째 글 </h3>
     <hr>
+    <p>작성자 : 
+      <a href="{% url "accounts:profile" article.user.username %}">{{ article.user }}</a>
+    </p>
     <p>제목 : {{ article.title }}</p>
     <p>내용 : {{ article.content }}</p>
     <p>언제썼냐면 : {{ article.created_at }}</p>
     <p>수정은언제 : {{ article.updated_at }}</p>
+    <p>해시태그 : 
+      {% for hashtag in hashtags %}
+        {{ hashtag.content }}
+      {% endfor %} 
+    </p>
   </div>
 
   {% comment %} 수정, 삭제, 뒤로가기 {% endcomment %}

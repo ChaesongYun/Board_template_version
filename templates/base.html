@@ -9,15 +9,15 @@
     {% bootstrap_css %}
     <title>빛나는 소나무</title>
     <link rel="stylesheet" href="{% static "css/style.css" %}">
-    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="container p-3">
         {% comment %} 로그인된 상태일 때 {% endcomment %}
         {% if request.user.is_authenticated %}
-            <h3>안녕, {{ user }}</h3>
+            <h3>안녕, 
+                <a href="{% url "accounts:profile" request.user.username %}"> {{ user }} </a>   
+            </h3>
+            <a href="{% url "accounts:update" %}">회원정보 수정</a>
             <form action="{% url "accounts:logout" %}" method="POST">
                 {% csrf_token %}
                 <input type="submit" value="로그아웃">

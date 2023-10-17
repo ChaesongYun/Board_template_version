@@ -17,10 +17,7 @@
         {% if request.user in article.like_users.all %}
             <input type="submit" value="좋아요,,취솜">
         {% else %}
-        <button type="submit">
-            <i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color:red;">
-            </i>
-        </button>
+            <input type="submit" value="좋아요">
         {% endif %}
     </form>
     <hr>

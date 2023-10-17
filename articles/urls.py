@@ -20,4 +20,8 @@ urlpatterns = [
 
     # 게시글 좋아요
     path('<int:article_pk>/likes/', views.likes, name='likes'),
+
+    # 해시태그
+    path('<int:hash_pk>/hashtag/', views.hashtag, name='hashtag'),
+
 ]
