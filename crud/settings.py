@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'fontawesomefree',
     'debug_toolbar',
+    'taggit',
 
     # django
     'django.contrib.admin',
@@ -51,6 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+TAGGIT_CASE_INSENSITIVE = True
 
 MIDDLEWARE = [
     # 디버깅 툴바 나타나게 하려면
@@ -118,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
 TIME_ZONE = 'UTC'
 

@@ -4,6 +4,7 @@ Django==4.2.6
 django-bootstrap-v5==1.0.11
 django-debug-toolbar==4.2.0
 django-extensions==3.2.3
+django-taggit==4.0.0
 fontawesomefree==6.4.2
 soupsieve==2.5
 sqlparse==0.4.4

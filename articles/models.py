@@ -1,4 +1,5 @@
 from django.db import models
+from taggit.managers import TaggableManager
 from django.conf import settings
 
 class Hashtag(models.Model):
@@ -23,6 +24,7 @@ class Article(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    tag = TaggableManager()
     
     def __str__(self):
         return self.title

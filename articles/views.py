@@ -40,14 +40,7 @@ def create(request):
             article.user = request.user
             # 통일성을 위해 
             # article.save()보단 form.save()로!
-            form.save()
-
-            for word in article.content.split(' '):
-                if word[0] == '#':
-                    # get_or_crate(): 첫번째 인자는 우리가 꺼내려고 하는 모델 객체
-                    # 두번째 인자는 flag!! 생성되면 true, 아니면 false
-                    hashtag, created = Hashtag.objects.get_or_create(content=word[1:])
-                    article.hashtags.add(hashtag)
+            form.save_m2m()
             return redirect('articles:detail', article.pk)
     else:
         form = ArticleForm()
