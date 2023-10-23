@@ -40,3 +40,15 @@ Django를 활용하여 간단한 게시판을 만들어보았습니다(∗❛⌄
 - 회원탈퇴
 - 팔로우
 ```
+
+<br>
+
+## 시연영상
+- 게시물/ 댓글
+<img width="100%" src="./README_img/게시물작성.gif">
+
+- 로그인/ 로그아웃/ 회원가입
+<img width="100%" src="./README_img/회원관리.gif">
+
+- 팔로우/ 회원 정보 수정
+<img width="100%" src="./README_img/팔로우.gif">
