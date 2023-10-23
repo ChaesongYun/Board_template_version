@@ -15,11 +15,11 @@ Django를 활용하여 간단한 게시판을 만들어보았습니다(∗❛⌄
 <br>
 
 ## 프로젝트 구조
-![file_tree](./README_img/file_tree.png)
+![prject tree](./README_img/project_tree.png)
 
 <br>
 
-## 프로젝트 API 요소
+## 기능구현
 1. articles
 ```
 - 전체 게시글 조회
